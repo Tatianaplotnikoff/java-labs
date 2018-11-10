@@ -1,0 +1,41 @@
+<project name="MyProject" default="test" basedir=".">
+    <property name="src" location="src"/>
+    <property name="main-java-dir" location="src/main/java"/>
+    <property name="test-java-dir" location="${src}/test/java"/>
+    <property name="build-dir" location="${basedir}/target/build"/>
+    <property name="classes-dir" location="${basedir}/target/classes"/>
+
+    <target name="init">
+        <mkdir dir="${build-dir}"/>
+        <mkdir dir="${classes-dir}"/>
+    </target>
+
+    <target name="compile" depends="init"
+            description="compile the source">
+        <javac srcdir="${main-java-dir}" destdir="${build-dir}"/>
+    </target>
+
+    <target name="test-compile" depends="compile">
+        <javac srcdir="${test-java-dir}" destdir="${build-dir}"/>
+    </target>
+
+    <target name="test" depends="test-compile">
+        <junit haltonfailure="no" printsummary="yes">
+            <classpath>
+                <pathelement location="${build-dir}"/>
+                <pathelement location="${test-java-dir}"/>
+            </classpath>
+            <batchtest>
+                <fileset dir="${test-java-dir}"/>
+            </batchtest>
+            <formatter type="plain" usefile="false"/>
+        </junit>
+    </target>
+
+
+    <target name="clean"
+            description="clean up">
+        <delete dir="${build-dir}"/>
+        <delete dir="${classes-dir}"/>
+    </target>
+</project>
