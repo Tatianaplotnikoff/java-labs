@@ -1,0 +1,6 @@
+CREATE TABLE users (
+id BIGINT NOT NULL IDENTITY PRIMARY KEY, 
+first_name VARCHAR NOT NULL, 
+last_name VARCHAR NOT NULL, 
+date_of_birth DATE NOT NULL
+)
