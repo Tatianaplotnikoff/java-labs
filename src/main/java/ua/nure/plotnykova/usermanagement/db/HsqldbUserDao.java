@@ -18,6 +18,9 @@ public class HsqldbUserDao implements UserDao {
 
     private static final String CREATE_USER = "INSERT INTO users (first_name, last_name, date_of_birth) VALUES (?,?,?)";
     private static final String GET_ALL_USERS = "SELECT id, first_name, last_name, date_of_birth FROM users";
+    private static final String GET_USER_BY_ID = "SELECT id, first_name, last_name, date_of_birth FROM users WHERE id = ?";
+    private static final String DELETE_USER = "DELETE FROM users WHERE id = ?";
+    private static final String UPDATE_USER = "UPDATE users SET first_name = ?, last_name = ?, date_of_birth = ? WHERE id = ?";
 
     private ConnectionFactory connectionFactory;
 
@@ -74,17 +77,63 @@ public class HsqldbUserDao implements UserDao {
 
     @Override
     public void update(User user) throws DatabaseException {
-
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionFactory.createConnection();
+            statement = connection.prepareStatement(UPDATE_USER);
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getLastName());
+            statement.setDate(3, new Date(user.getDateOfBirth().getTime()));
+            statement.setLong(4, user.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseException("Cannot update user");
+        } finally {
+            closeStatement(statement);
+            closeConnection(connection);
+        }
     }
 
     @Override
     public void delete(long userId) throws DatabaseException {
-
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionFactory.createConnection();
+            statement = connection.prepareStatement(DELETE_USER);
+            statement.setLong(1, userId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseException("Cannot delete specified user.");
+        } finally {
+            closeStatement(statement);
+            closeConnection(connection);
+        }
     }
 
     @Override
     public Optional<User> find(long userId) throws DatabaseException {
-        return Optional.empty();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        Optional<User> user = Optional.empty();
+        try {
+            connection = connectionFactory.createConnection();
+            statement = connection.prepareStatement(GET_USER_BY_ID);
+            statement.setLong(1, userId);
+            resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                user = Optional.of(parseUser(resultSet));
+            }
+            return user;
+        } catch (SQLException e) {
+            throw new DatabaseException("Cannot obtain user");
+        } finally {
+            closeResultSet(resultSet);
+            closeStatement(statement);
+            closeConnection(connection);
+        }
     }
 
     @Override
@@ -103,9 +152,9 @@ public class HsqldbUserDao implements UserDao {
         } catch (SQLException e) {
             throw new DatabaseException("Cannot obtain users");
         } finally {
-            closeConnection(connection);
-            closeStatement(statement);
             closeResultSet(resultSet);
+            closeStatement(statement);
+            closeConnection(connection);
         }
         return users;
     }

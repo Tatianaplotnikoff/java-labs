@@ -1,6 +1,5 @@
 package ua.nure.plotnykova.usermanagement.db;
 
-import sun.dc.pr.PRError;
 import ua.nure.plotnykova.usermanagement.db.factory.ConnectionFactory;
 import ua.nure.plotnykova.usermanagement.db.factory.ConnectionFactoryImpl;
 
@@ -14,7 +13,7 @@ public class DaoFactory {
     private static DaoFactory daoFactory;
 
     public static synchronized DaoFactory getInstance() {
-        if(Objects.isNull(daoFactory)) {
+        if (Objects.isNull(daoFactory)) {
             daoFactory = new DaoFactory();
         }
         return daoFactory;
@@ -40,14 +39,13 @@ public class DaoFactory {
 
     public UserDao getUserDao() {
         UserDao userDao = null;
-        Class userDaoClass = null;
         try {
-            userDaoClass = Class.forName(properties.getProperty("dao.knure.ctde.usermanagement.db.UserDao"))
+            Class userDaoClass = Class.forName(properties.getProperty("dao.knure.ctde.usermanagement.db.UserDao"));
             userDao = (UserDao) userDaoClass.newInstance();
+            userDao.setConnectionFactory(getConnectionFactory());
         } catch (Exception e) {
             throw new RuntimeException("Class user dao not found");
         }
-        userDao.setConnectionFactory(getConnectionFactory());
         return userDao;
     }
 }

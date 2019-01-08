@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 
 public class HsqldbUserDaoTest extends DatabaseTestCase {
 
@@ -28,7 +29,8 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 
     @Override
     protected IDatabaseConnection getConnection() throws Exception {
-        connectionFactory = new ConnectionFactoryImpl();
+        connectionFactory = new ConnectionFactoryImpl("org.hsqldb.jdbcDriver",
+                "jdbc:hsqldb:file:db/usermanagement", "sa", "");
         return new DatabaseConnection(connectionFactory.createConnection());
     }
 
@@ -64,8 +66,44 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         } catch (DatabaseException e) {
             Assert.fail(e.toString());
         }
+    }
 
+    public void testFindById() {
+        try {
+            Optional<User> user = dao.find(1000L);
+            assertTrue("User is null",user.isPresent());
+        } catch (DatabaseException e) {
+            fail(e.toString());
+        }
+    }
 
+    public void testDeleteUser() {
+        try {
+            long userId = 1000L;
+            dao.delete(userId);
+            Optional<User> userOptional = dao.find(userId);
+            assertFalse("User is exists", userOptional.isPresent());
+
+        } catch (DatabaseException e) {
+            fail(e.toString());
+        }
+    }
+
+    public void testUpdateUser() {
+        try {
+            long userId = 1000;
+            String expectedName = "Harry";
+            user.setFirstName(expectedName);
+            user.setId(userId);
+            dao.update(user);
+            Optional<User> userOptional = dao.find(userId);
+            if(userOptional.isPresent()) {
+                User user = userOptional.get();
+                assertEquals("Name is not equals", expectedName, user.getFirstName());
+            }
+        } catch (DatabaseException e) {
+            fail(e.toString());
+        }
     }
 
     private static User constructUser() throws ParseException {
