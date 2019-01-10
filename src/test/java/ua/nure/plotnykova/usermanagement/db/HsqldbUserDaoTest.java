@@ -51,7 +51,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
     public void testCreateUser() {
         assertNull(user.getId());
         try {
-            user = dao.create(user).get();
+            user = dao.create(user);
         } catch (DatabaseException e) {
             fail(e.toString());
         }

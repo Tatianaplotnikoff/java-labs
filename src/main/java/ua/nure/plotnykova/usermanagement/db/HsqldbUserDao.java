@@ -42,7 +42,7 @@ public class HsqldbUserDao implements UserDao {
     }
 
     @Override
-    public Optional<User> create(User user) throws DatabaseException {
+    public User create(User user) throws DatabaseException {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet keys = null;
@@ -64,7 +64,7 @@ public class HsqldbUserDao implements UserDao {
                 user.setId(keys.getLong(1));
             }
 
-            return Optional.of(user);
+            return user;
         } catch (SQLException e) {
             throw new DatabaseException("Cannot create new user.");
         } finally {

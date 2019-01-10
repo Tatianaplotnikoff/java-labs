@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="net.sf.jfcunit:jfcunit:2.08" type="repository">
+    <properties maven-id="net.sf.jfcunit:jfcunit:2.08" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jfcunit-2.08.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit-3.8.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jakarta-regexp-1.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

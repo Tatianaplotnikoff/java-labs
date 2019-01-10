@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="mockobjects:mockobjects-core:0.09" type="repository">
+    <properties maven-id="mockobjects:mockobjects-core:0.09" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/mockobjects-core-0.09.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

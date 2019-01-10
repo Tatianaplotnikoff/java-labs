@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="dbunit-2.1" level="project" />
+    <orderEntry type="library" name="hamcrest-core-1.31" level="project" />
+    <orderEntry type="library" name="hsqldb-1.8.0.10" level="project" />
+    <orderEntry type="library" name="junit-4.121" level="project" />
+    <orderEntry type="library" name="net.sf.jfcunit:jfcunit:2.08" level="project" />
+    <orderEntry type="library" name="regexp:regexp:1.3" level="project" />
+    <orderEntry type="library" name="mockobjects:mockobjects-core:0.09" level="project" />
+  </component>
+</module>

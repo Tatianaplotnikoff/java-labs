@@ -2,6 +2,7 @@ package ua.nure.plotnykova.usermanagement.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class User implements Serializable {
@@ -9,6 +10,25 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    public User(String firstName, String lastName, Date now) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = now;
+    }
 
     public Long getId() {
         return id;

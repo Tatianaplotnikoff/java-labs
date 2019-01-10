@@ -26,6 +26,6 @@ public class UserTest {
 
     @Test
     public void getAgeTest() {
-        assertEquals(22, user.getAge(Calendar.getInstance().getTime()));
+        assertEquals(23, user.getAge(Calendar.getInstance().getTime()));
     }
 }

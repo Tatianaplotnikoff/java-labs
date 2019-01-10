@@ -23,7 +23,7 @@ public interface UserDao {
      * @return created user.
      * @throws DatabaseException database exception
      */
-    Optional<User> create(User user) throws DatabaseException;
+    User create(User user) throws DatabaseException;
 
     /**
      * Update existing user.

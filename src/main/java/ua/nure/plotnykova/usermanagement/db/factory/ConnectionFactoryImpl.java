@@ -3,6 +3,7 @@ package ua.nure.plotnykova.usermanagement.db.factory;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConnectionFactoryImpl implements ConnectionFactory {
     private String driver;
@@ -15,6 +16,13 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
         this.url = url;
         this.userName = userName;
         this.password = password;
+    }
+
+    public ConnectionFactoryImpl(Properties properties) {
+        driver = properties.getProperty("connection.driver");
+        url = properties.getProperty("connection.url");
+        userName = properties.getProperty("connection.user");
+        password = properties.getProperty("connection.password");
     }
 
     @Override
