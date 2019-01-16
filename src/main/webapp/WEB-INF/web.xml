@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+    
+    <servlet>
+        <servlet-name>BrowseServlet</servlet-name>
+        <servlet-class>ua.nure.plotnykova.usermanagement.web.BrowseServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddServlet</servlet-name>
+        <servlet-class>ua.nure.plotnykova.usermanagement.web.AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditServlet</servlet-name>
+        <servlet-class>ua.nure.plotnykova.usermanagement.web.EditServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailsServlet</servlet-name>
+        <servlet-class>ua.nure.plotnykova.usermanagement.web.DetailsServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>BrowseServlet</servlet-name>
+        <url-pattern>/browse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddServlet</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditServlet</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailsServlet</servlet-name>
+        <url-pattern>/details</url-pattern>
+    </servlet-mapping>
+
+</web-app>

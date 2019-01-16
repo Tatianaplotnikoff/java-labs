@@ -1,9 +1,26 @@
-<project name="MyProject" default="test" basedir=".">
+<project name="MyProject" basedir=".">
     <property name="src" location="src"/>
     <property name="main-java-dir" location="src/main/java"/>
+    <property name="main-resources-dir" location="src/main/resources"/>
+    <property name="main-webapp-dir" location="src/main/webapp"/>
+    <property name="main-webapp-web-inf-dir" location="${main-webapp-dir}/WEB-INF"/>
     <property name="test-java-dir" location="${src}/test/java"/>
     <property name="build-dir" location="${basedir}/target/build"/>
     <property name="classes-dir" location="${basedir}/target/classes"/>
+    <property name="lib-dir" location="${basedir}/lib"/>
+
+
+    <property name="war-name" value="users"/>
+    <property name="war-dir" value="${build-dir}/${war-name}"/>
+    <property name="war-jsp-dir" value="${war-dir}"/>
+    <property name="war-web-inf-dir" value="${war-dir}/WEB-INF"/>
+    <property name="war-lib-dir" value="${war-web-inf-dir}/lib"/>
+    <property name="war-classes-dir" value="${war-web-inf-dir}/classes"/>
+
+
+    <path id="classpath">
+        <fileset dir="${lib-dir}" includes="**/*.jar"/>
+    </path>
 
     <target name="init">
         <mkdir dir="${build-dir}"/>
@@ -12,7 +29,44 @@
 
     <target name="compile" depends="init"
             description="compile the source">
-        <javac srcdir="${main-java-dir}" destdir="${build-dir}"/>
+        <javac srcdir="${main-java-dir}" destdir="${build-dir}" classpathref="classpath"/>
+
+    </target>
+
+    <target name="war.exploded" depends="compile">
+        <copy todir="${war-jsp-dir}">
+            <fileset dir="${main-webapp-dir}"/>
+        </copy>
+        <copy todir="${war-lib-dir}">
+            <fileset dir="${lib-dir}">
+                <include name="hsqldb*.jar"/>
+                <include name="jstl*.jar"/>
+                <include name="standard*.jar"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${war-classes-dir}">
+            <fileset dir="${main-resources-dir}"/>
+        </copy>
+
+        <copy todir="${war-classes-dir}">
+            <fileset dir="${classes-dir}"/>
+        </copy>
+    </target>
+
+    <target name="war" depends="war.exploded">
+        <delete file="${build-dir}/${war-name}.war" failonerror="no"/>
+        <war destfile="${build-dir}/${war-name}.war" webxml="${main-webapp-web-inf-dir}/web.xml">
+            <fileset dir="${war-jsp-dir}">
+                <exclude name="WEB-INF/*.*"/>
+            </fileset>
+            <classes dir="${war-classes-dir}"/>
+            <lib dir="${war-lib-dir}"/>
+            <webinf dir="${war-web-inf-dir}">
+                <exclude name="web.xml"/>
+            </webinf>
+        </war>
+
     </target>
 
     <target name="test-compile" depends="compile">
